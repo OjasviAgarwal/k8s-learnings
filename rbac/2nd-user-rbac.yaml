@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: nginx
+  name: read-pods-nginx
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods-user2-nginx
+  namespace: nginx
+subjects:
+- kind: User
+  name: blue-team-user@oagarwal1998outlook.onmicrosoft.com
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: read-pods-nginx
+  apiGroup: rbac.authorization.k8s.io
