@@ -1,0 +1,19 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /etc/ssl/certs
+    containerPath: /etc/ssl/certs
+  kubeadmConfigPatches:
+  - |
+    kind: ClusterConfiguration
+    apiServer:
+      extraArgs:
+        oidc-issuer-url: https://127.0.0.1:5554
+        oidc-client-id: example-app
+        oidc-ca-file: /etc/ssl/certs/openid-ca.pem
+        oidc-username-claim: email
+        oidc-groups-claim: groups
+- role: worker
+- role: worker

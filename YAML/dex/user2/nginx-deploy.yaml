@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: user2-ns
+  labels:
+    app: nginx
+spec:
+  template:
+    metadata:
+      name: nginx-2
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: docker.io/nginx:latest
+          imagePullPolicy: IfNotPresent
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
